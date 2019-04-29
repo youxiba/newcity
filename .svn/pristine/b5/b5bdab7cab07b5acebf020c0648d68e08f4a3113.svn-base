@@ -1,0 +1,14 @@
+## 头部
+#macro(topbar $nav)
+	${httpInclude.include("/topbar.html?headnav=$nav")}
+#end
+
+## 尾部
+#macro(foot)
+	#parse("/WEB-INF/view/footer.html")
+#end
+
+## 侧边栏
+#macro(user_sidebar $sidenav)
+	${httpInclude.include("/myhome/user-sidebar.html?sidenav=$sidenav")}
+#end

@@ -1,0 +1,10 @@
+#FTP服务器信息配置
+ftp.ip.address=220.165.143.53
+ftp.port=222
+ftp.username=yh
+ftp.password=123456
+#SFTP服务器信息配置
+sftp.ip.address=47.98.170.212
+sftp.port=22
+sftp.username=root
+sftp.password=yunxiao365

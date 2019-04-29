@@ -1,0 +1,13 @@
+<toolbox>
+    <xhtml>true</xhtml>
+    <tool>
+        <key>stringTool</key>
+        <scope>application</scope>
+        <class>com.city.util.StringUtil</class>
+    </tool>
+<!--    <tool>
+        <key>dateTool</key>
+        <scope>application</scope>
+        <class>com.city.util.DateUtil</class>
+    </tool>-->
+</toolbox>

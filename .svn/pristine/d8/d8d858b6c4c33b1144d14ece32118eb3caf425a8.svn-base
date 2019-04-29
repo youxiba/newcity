@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.city.dao"></context:component-scan>
+    <!-- 加载properties配置文件 -->
+    <context:property-placeholder location="classpath:jdbc.properties"></context:property-placeholder>
+
+    <!-- 配置数据源 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+        <!-- 初始化连接大小 -->
+        <property name="initialSize" value="${jdbc.initialSize}"></property>
+        <!-- 连接池最大数量 -->
+        <property name="maxActive" value="${jdbc.maxActive}"></property>
+        <!--连接池最大空闲-->
+        <property name="maxIdle" value="${jdbc.maxIdle}"></property>
+        <!-- 连接池最小空闲 -->
+        <property name="minIdle" value="${jdbc.minIdle}"></property>
+        <!-- 获取连接最大等待时间 -->
+        <property name="maxWait" value="${jdbc.maxWait}"></property>
+
+        <property name="filters" value="${jdbc.filters}"></property>
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}"></property>
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+        <property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}"></property>
+
+        <property name="validationQuery" value="${jdbc.validationQuery}"></property>
+
+        <property name="testWhileIdle" value="${jdbc.testWhileIdle}"></property>
+
+        <property name="testOnBorrow" value="${jdbc.testOnBorrow}"></property>
+
+        <property name="testOnReturn" value="${jdbc.testOnReturn}"></property>
+
+        <property name="maxOpenPreparedStatements" value="${jdbc.maxOpenPreparedStatements}"></property>
+        <!-- 打开 removeAbandoned 功能 -->
+        <property name="removeAbandoned" value="${jdbc.removeAbandoned}"></property>
+        <!-- 1800 秒，也就是 30 分钟 -->
+        <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}"></property>
+        <!-- 关闭 abanded 连接时输出错误日志 -->
+        <property name="logAbandoned" value="${jdbc.logAbandoned}"></property>
+    </bean>
+
+
+    <!-- 配置sqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 指定mybatis的全局配置文件的路径 -->
+        <property name="configLocation" value="classpath:SqlMapConfig.xml"></property>
+        <!-- 指定数据源 -->
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <!-- 批量配置,这里是配置mapper代理,那么下面就不用配置id了
+    想要获取哪个mapper代理用这个格式:类名首字母小写
+    -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.city.dao.mapper"></property>
+        <!-- 默认不需要配置,但是如果有多个数据源的配置,那么就需要配置此项 -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+    </bean>
+</beans>
